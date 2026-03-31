@@ -8,6 +8,7 @@ import './styles/Mobile.css';
 function App() {
   const prefilledRoomId = getRoomFromLocation();
   const [gameState, setGameState] = useState('join'); // 'join' or 'playing'
+  const isLobby = gameState === 'join';
   const [roomId, setRoomId] = useState(null);
   const [userName, setUserName] = useState(null);
   const [socket, setSocket] = useState(null);
@@ -123,12 +124,14 @@ function App() {
 
   return (
     <div className="app">
-      <header className="app-header">
-        <h1>🃏 Tarot Dev Poker</h1>
-        <p className="subtitle">Planning Poker para Times de Desenvolvimento</p>
-      </header>
+      {isLobby && (
+        <header className="app-header">
+          <h1>🃏 Tarot Dev Poker</h1>
+          <p className="subtitle">Planning Poker para Times de Desenvolvimento</p>
+        </header>
+      )}
 
-      <main className="app-main">
+      <main className={`app-main ${isLobby ? 'lobby' : 'playing'}`}>
         {gameState === 'join' ? (
           <RoomJoin onJoin={handleJoinRoom} initialRoomId={prefilledRoomId} />
         ) : (
@@ -151,9 +154,11 @@ function App() {
         )}
       </main>
 
-      <footer className="app-footer">
-        <p>Desenvolvido por Rodrigo Alexandre | Mobile Dev MERN</p>
-      </footer>
+      {isLobby && (
+        <footer className="app-footer">
+          <p>Desenvolvido por Rodrigo Alexandre | Mobile Dev MERN</p>
+        </footer>
+      )}
     </div>
   );
 }

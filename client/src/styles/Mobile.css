@@ -37,22 +37,22 @@
 /* Responsive grid for cards */
 @media (max-width: 1024px) {
   .cards-grid {
-    grid-template-columns: repeat(3, minmax(80px, 1fr)) !important;
+    grid-template-columns: repeat(3, minmax(96px, 128px)) !important;
     justify-content: center !important;
   }
 }
 
 @media (max-width: 768px) {
   .cards-grid {
-    grid-template-columns: repeat(3, minmax(75px, 1fr)) !important;
-    gap: 0.8rem !important;
+    grid-template-columns: repeat(3, minmax(88px, 118px)) !important;
+    gap: 0.7rem !important;
     justify-content: center !important;
   }
 }
 
 @media (max-width: 480px) {
   .cards-grid {
-    grid-template-columns: repeat(3, minmax(65px, 1fr)) !important;
+    grid-template-columns: repeat(3, minmax(78px, 104px)) !important;
     gap: 0.6rem !important;
     justify-content: center !important;
   }

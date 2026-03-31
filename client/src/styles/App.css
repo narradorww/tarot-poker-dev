@@ -67,9 +67,18 @@ body {
 .app-main {
   flex: 1;
   display: flex;
+  padding: 2rem 1rem;
+}
+
+.app-main.lobby {
   align-items: center;
   justify-content: center;
-  padding: 2rem 1rem;
+}
+
+.app-main.playing {
+  align-items: stretch;
+  justify-content: stretch;
+  padding: 0;
 }
 
 .app-footer {
@@ -127,5 +136,9 @@ body {
 
   .app-main {
     padding: 1rem;
+  }
+
+  .app-main.playing {
+    padding: 0;
   }
 }

@@ -5,6 +5,7 @@ export default function TarotCard({ value, isSelected, isRevealed, participantVo
   const description = TAROT_DESCRIPTIONS[value];
   const [imageError, setImageError] = useState(false);
   const imageSrc = useMemo(() => `/cards/${String(value).toLowerCase()}.png`, [value]);
+  const footerLabel = description.label === 'D' ? 'Dúvida' : `${description.label} pontos`;
 
   return (
     <div
@@ -30,6 +31,10 @@ export default function TarotCard({ value, isSelected, isRevealed, participantVo
             </div>
           )}
 
+          <div className="card-footer">
+            <span>{footerLabel}</span>
+          </div>
+
           {isSelected && (
             <div className="selection-indicator">✓</div>
           )}
@@ -50,6 +55,8 @@ export default function TarotCard({ value, isSelected, isRevealed, participantVo
           border: 2px solid #9d4edd;
           border-radius: 12px;
           padding: 0.35rem;
+          width: 100%;
+          max-width: 160px;
           cursor: pointer;
           transition: all 0.3s ease;
           position: relative;
@@ -127,6 +134,26 @@ export default function TarotCard({ value, isSelected, isRevealed, participantVo
           display: block;
         }
 
+        .card-footer {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(8, 4, 18, 0.86);
+          border-top: 1px solid rgba(199, 125, 255, 0.45);
+          padding: 0.35rem 0.2rem;
+          text-align: center;
+          z-index: 3;
+        }
+
+        .card-footer span {
+          font-size: 0.72rem;
+          font-weight: 700;
+          color: #f4e8ff;
+          letter-spacing: 0.03em;
+          text-transform: uppercase;
+        }
+
         .card-fallback {
           display: flex;
           flex-direction: column;
@@ -198,8 +225,12 @@ export default function TarotCard({ value, isSelected, isRevealed, participantVo
 
         @media (max-width: 600px) {
           .tarot-card {
-            min-width: 70px;
+            max-width: 122px;
             padding: 0.3rem;
+          }
+
+          .card-footer span {
+            font-size: 0.62rem;
           }
         }
       `}</style>

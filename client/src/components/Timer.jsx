@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-export default function Timer({ isActive, duration = 60, onTimeEnd }) {
+export default function Timer({ isActive, duration = 60, onTimeEnd, size = 'md' }) {
   const [timeLeft, setTimeLeft] = useState(duration);
+  const isSmall = size === 'sm';
+  const timerSize = isSmall ? 82 : 120;
+  const timerFontSize = isSmall ? 1.15 : 1.8;
 
   useEffect(() => {
     if (!isActive) return;
@@ -26,7 +29,13 @@ export default function Timer({ isActive, duration = 60, onTimeEnd }) {
   const isWarning = timeLeft <= 10;
 
   return (
-    <div className={`timer-container ${isActive ? 'active' : ''} ${isWarning ? 'warning' : ''}`}>
+    <div
+      className={`timer-container ${isActive ? 'active' : ''} ${isWarning ? 'warning' : ''}`}
+      style={{
+        '--timer-size': `${timerSize}px`,
+        '--timer-font-size': `${timerFontSize}rem`
+      }}
+    >
       <div className="timer-display">
         <div className="timer-circle">
           <svg className="timer-svg" viewBox="0 0 100 100">
@@ -66,8 +75,8 @@ export default function Timer({ isActive, duration = 60, onTimeEnd }) {
         }
 
         .timer-display {
-          width: 120px;
-          height: 120px;
+          width: var(--timer-size);
+          height: var(--timer-size);
         }
 
         .timer-circle {
@@ -112,7 +121,7 @@ export default function Timer({ isActive, duration = 60, onTimeEnd }) {
         }
 
         .time {
-          font-size: 1.8rem;
+          font-size: var(--timer-font-size);
           text-shadow: 0 0 10px rgba(157, 78, 221, 0.5);
         }
 
@@ -132,12 +141,8 @@ export default function Timer({ isActive, duration = 60, onTimeEnd }) {
 
         @media (max-width: 600px) {
           .timer-display {
-            width: 100px;
-            height: 100px;
-          }
-
-          .time {
-            font-size: 1.4rem !important;
+            width: calc(var(--timer-size) - 12px);
+            height: calc(var(--timer-size) - 12px);
           }
         }
       `}</style>

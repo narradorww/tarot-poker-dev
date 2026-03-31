@@ -68,7 +68,6 @@ export default function PokerTable({
     estimateTask(roomId, value);
   };
 
-  const isFacilitator = true; // Para simplificar, todos podem revelar. Você pode adicionar controle de facilitador
   const allVoted = totalParticipants > 0 && voteCount === totalParticipants;
   const currentVoteLabel = userVote === 'D' ? 'Dúvida' : `${userVote} pontos`;
 
@@ -96,26 +95,6 @@ export default function PokerTable({
 
   return (
     <div className="poker-table">
-      {/* Header with room info */}
-      <div className="table-header">
-        <div className="header-left">
-          <h2>🎭 Sala: <code title={roomId}>{roomId.substring(0, 8)}...</code></h2>
-          <p className="user-info">Bem-vindo, {userName}!</p>
-        </div>
-        <div className="header-right">
-          <button className="btn-copy" onClick={handleCopyInvite}>
-            🔗 Copiar convite
-          </button>
-          {copyFeedback && <span className="copy-feedback">{copyFeedback}</span>}
-          <button className="btn-history" onClick={() => setShowHistory(!showHistory)}>
-            📚 Histórico ({history.length})
-          </button>
-          <button className="btn-leave" onClick={onLeaveRoom}>
-            🚪 Sair
-          </button>
-        </div>
-      </div>
-
       <div className="table-content">
         {/* Main voting area */}
         <div className="voting-section">
@@ -132,7 +111,7 @@ export default function PokerTable({
               <div className="task-section">
                 <div className="task-header">
                   <h3 className="task-name">{currentTask.name}</h3>
-                  <Timer isActive={timerActive} duration={60} />
+                  <Timer isActive={timerActive} duration={60} size="sm" />
                 </div>
 
                 <div className="cards-grid">
@@ -205,6 +184,26 @@ export default function PokerTable({
 
         {/* Sidebar */}
         <div className="sidebar">
+          <div className="room-info-panel">
+            <h3>🎭 Sala</h3>
+            <div className="room-code" title={roomId}>{roomId}</div>
+            <p className="user-info">Bem-vindo, {userName}</p>
+
+            <div className="room-actions">
+              <button className="btn-copy" onClick={handleCopyInvite}>
+                🔗 Copiar convite
+              </button>
+              <button className="btn-history" onClick={() => setShowHistory(!showHistory)}>
+                📚 Histórico ({history.length})
+              </button>
+              <button className="btn-leave" onClick={onLeaveRoom}>
+                🚪 Sair
+              </button>
+            </div>
+
+            {copyFeedback && <span className="copy-feedback">{copyFeedback}</span>}
+          </div>
+
           {/* Add task form */}
           <div className="add-task-panel">
             <h3>➕ Nova Tarefa</h3>
@@ -249,48 +248,49 @@ export default function PokerTable({
           flex-direction: column;
         }
 
-        .table-header {
-          background: rgba(20, 20, 40, 0.8);
-          border-bottom: 2px solid #9d4edd;
-          padding: 1.5rem 2rem;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
+        .room-info-panel {
+          background: rgba(20, 20, 40, 0.6);
+          border: 1px solid #9d4edd;
+          border-radius: 12px;
+          padding: 1.2rem;
           backdrop-filter: blur(10px);
         }
 
-        .header-left h2 {
-          margin: 0 0 0.5rem 0;
+        .room-info-panel h3 {
+          margin: 0;
           color: #c77dff;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
+          font-size: 1.05rem;
         }
 
-        .header-left code {
+        .room-code {
+          margin-top: 0.7rem;
           background: rgba(157, 78, 221, 0.2);
-          padding: 0.3rem 0.6rem;
-          border-radius: 4px;
-          font-size: 0.9rem;
+          border: 1px solid rgba(199, 125, 255, 0.35);
+          border-radius: 8px;
+          padding: 0.5rem 0.65rem;
+          color: #e9d5ff;
+          font-size: 0.85rem;
           font-family: 'Courier New', monospace;
-          color: #a78bfa;
+          word-break: break-all;
         }
 
         .user-info {
-          margin: 0;
+          margin: 0.6rem 0 0 0;
           color: #a78bfa;
           font-size: 0.9rem;
         }
 
-        .header-right {
-          display: flex;
-          gap: 1rem;
+        .room-actions {
+          margin-top: 0.9rem;
+          display: grid;
+          gap: 0.6rem;
         }
 
         .btn-copy,
         .btn-history,
         .btn-leave {
-          padding: 0.6rem 1.2rem;
+          width: 100%;
+          padding: 0.6rem 0.9rem;
           border: 1px solid #9d4edd;
           background: rgba(157, 78, 221, 0.1);
           color: #c77dff;
@@ -310,25 +310,25 @@ export default function PokerTable({
           color: #00d9ff;
         }
 
-        .copy-feedback {
-          color: #00d9ff;
-          font-size: 0.85rem;
-          align-self: center;
-          white-space: nowrap;
-        }
-
         .btn-leave:hover {
           background: rgba(255, 0, 110, 0.2);
           border-color: #ff006e;
           color: #ff006e;
         }
 
+        .copy-feedback {
+          display: inline-block;
+          margin-top: 0.65rem;
+          color: #00d9ff;
+          font-size: 0.82rem;
+        }
+
         .table-content {
           flex: 1;
           display: grid;
-          grid-template-columns: 1fr 350px;
-          gap: 2rem;
-          padding: 2rem;
+          grid-template-columns: 1fr 360px;
+          gap: 1.4rem;
+          padding: 1.3rem;
           overflow: hidden;
         }
 
@@ -336,7 +336,7 @@ export default function PokerTable({
           background: rgba(20, 20, 40, 0.4);
           border: 1px solid #9d4edd;
           border-radius: 15px;
-          padding: 2rem;
+          padding: 1.2rem;
           backdrop-filter: blur(10px);
           overflow-y: auto;
         }
@@ -376,31 +376,32 @@ export default function PokerTable({
         .task-section {
           display: flex;
           flex-direction: column;
-          gap: 1.5rem;
+          gap: 0.95rem;
         }
 
         .task-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          gap: 1rem;
-          padding-bottom: 1rem;
+          gap: 0.65rem;
+          padding-bottom: 0.45rem;
           border-bottom: 1px solid rgba(157, 78, 221, 0.3);
         }
 
         .task-name {
           color: #c77dff;
           margin: 0;
-          font-size: 1.3rem;
+          font-size: 1.08rem;
+          line-height: 1.2;
           flex: 1;
         }
 
         .cards-grid {
           display: grid;
-          grid-template-columns: repeat(3, minmax(92px, 112px));
-          gap: 1rem;
+          grid-template-columns: repeat(3, minmax(118px, 168px));
+          gap: 0.9rem;
           justify-content: center;
-          justify-items: center;
+          justify-items: stretch;
         }
 
         .voting-controls {
@@ -546,25 +547,17 @@ export default function PokerTable({
         }
 
         @media (max-width: 600px) {
-          .table-header {
-            flex-direction: column;
-            gap: 1rem;
-            align-items: flex-start;
-            padding: 1rem;
-          }
-
-          .header-right {
-            width: 100%;
-            flex-wrap: wrap;
-          }
-
           .table-content {
             padding: 1rem;
             gap: 1rem;
           }
 
           .voting-section {
-            padding: 1rem;
+            padding: 0.95rem;
+          }
+
+          .task-header {
+            align-items: flex-start;
           }
 
           .action-buttons {
@@ -577,8 +570,8 @@ export default function PokerTable({
           }
 
           .cards-grid {
-            grid-template-columns: repeat(3, minmax(70px, 96px));
-            gap: 0.8rem;
+            grid-template-columns: repeat(3, minmax(84px, 120px));
+            gap: 0.65rem;
             justify-content: center;
           }
         }
