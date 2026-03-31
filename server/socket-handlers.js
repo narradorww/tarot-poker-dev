@@ -37,7 +37,7 @@ export const handleSocketConnection = (socket, io, getOrCreateRoom, getRooms) =>
   // Add new task to voting
   socket.on('add-task', (data) => {
     const { roomId, task } = data;
-    const room = room = rooms.get(roomId);
+    const room = rooms.get(roomId);
 
     if (!room) return;
 
