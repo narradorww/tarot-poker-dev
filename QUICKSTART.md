@@ -81,16 +81,17 @@ vercel
 
 Escolha as opções padrão. ✅ **Done!**
 
-### Railway (Backend)
+### Render (Backend)
 
-1. Acesse [railway.app](https://railway.app)
-2. "New Project" → "Deploy from GitHub"
-3. Selecione seu repo
-4. Configure envs:
+1. Acesse [render.com](https://render.com)
+2. "New" → "Web Service" → conecte seu repositório GitHub
+3. Root Directory: `server`
+4. Build Command: `npm install`
+5. Start Command: `npm start`
+6. Configure env:
    - `NODE_ENV=production`
-   - `PORT=3001`
    - `CORS_ORIGIN=https://SEU-PROJETO.vercel.app`
-5. Deploy automático! 🚀
+7. Deploy automático! 🚀
 
 ---
 

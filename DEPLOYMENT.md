@@ -4,7 +4,7 @@ Instruções para hospedar o Tarot Dev Poker em diferentes plataformas e integr�
 
 ## 📍 Opção 1: Como Aplicação Standalone (Recomendado para começar)
 
-### GitHub Pages + Railway/Vercel
+### GitHub + Render/Vercel
 
 #### Frontend no Vercel
 
@@ -25,25 +25,24 @@ vercel
 No painel da Vercel, configure:
 
 ```env
-VITE_SERVER_URL=https://tarot-dev-poker-api.railway.app
+VITE_SERVER_URL=https://tarot-dev-poker-api.onrender.com
 ```
 
 Seu frontend estará em: `https://tarot-dev-poker.vercel.app`
 
-#### Backend no Railway
+#### Backend no Render
 
-1. Acesse [railway.app](https://railway.app)
-2. Clique em "New Project" → "Deploy from GitHub"
+1. Acesse [render.com](https://render.com)
+2. Clique em "New" → "Web Service" → "Build and deploy from a Git repository"
 3. Conecte seu repositório
 4. Configure as variáveis de ambiente:
    ```
    NODE_ENV=production
-   PORT=3001
    CORS_ORIGIN=https://tarot-dev-poker.vercel.app,https://rodrigoalexandre.dev
    ```
 5. Deploy automático a cada push para `main`
 
-Backend estará em: `https://tarot-dev-poker-api.railway.app`
+Backend estará em: `https://tarot-dev-poker-api.onrender.com`
 
 #### Atualize o Frontend
 
@@ -87,7 +86,7 @@ const PokerApp = dynamic(() => import('@/components/PokerApp'), { ssr: false });
 export default function PokerPage() {
   return (
     <div>
-      <PokerApp serverUrl="https://tarot-dev-poker-api.railway.app" />
+      <PokerApp serverUrl="https://tarot-dev-poker-api.onrender.com" />
     </div>
   );
 }
@@ -121,14 +120,14 @@ export const getServerUrl = () => {
     return 'http://localhost:3001';
   }
   // Use variável de ambiente
-  return process.env.NEXT_PUBLIC_POKER_API || 'https://tarot-dev-poker-api.railway.app';
+  return process.env.NEXT_PUBLIC_POKER_API || 'https://tarot-dev-poker-api.onrender.com';
 };
 ```
 
 6. **Adicione ao `.env.local`:**
 
 ```env
-NEXT_PUBLIC_POKER_API=https://tarot-dev-poker-api.railway.app
+NEXT_PUBLIC_POKER_API=https://tarot-dev-poker-api.onrender.com
 ```
 
 7. **Deploy no Vercel:**
@@ -258,7 +257,7 @@ npm run build
 |----------|-----|--------|
 | Local Dev | http://localhost:5173 | ✅ |
 | Vercel Frontend | https://tarot-dev-poker.vercel.app | Configurar |
-| Railway Backend | https://tarot-dev-poker-api.railway.app | Configurar |
+| Render Backend | https://tarot-dev-poker-api.onrender.com | Configurar |
 | Seu site | https://rodrigoalexandre.dev/poker | Configurar |
 
 ---
@@ -282,7 +281,7 @@ Verifique `CORS_ORIGIN` no seu `.env`
 
 - Verifique se a porta 3001 (ou sua porta) está aberta
 - Confirme WSS (WebSocket Secure) em produção
-- Revise logs: `railway logs` ou `vercel logs`
+- Revise logs: dashboard do Render ou `vercel logs`
 
 ### Build falha
 

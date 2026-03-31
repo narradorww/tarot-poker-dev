@@ -177,17 +177,16 @@ export const TAROT_DESCRIPTIONS = {
 
 ## 🌐 Deploy
 
-### Opção 1: Vercel (Frontend) + Railway/Render (Backend)
+### Opção 1: Vercel (Frontend) + Render (Backend)
 
 ```bash
-# 1) Backend primeiro (Railway/Render)
+# 1) Backend primeiro (Render)
 # Configure as envs no backend:
 # NODE_ENV=production
-# PORT=3001
 # CORS_ORIGIN=https://SEU-PROJETO.vercel.app,https://SEU-DOMINIO.com
 #
 # 2) Frontend no Vercel (root: client/)
-# VITE_SERVER_URL=https://SEU-BACKEND.railway.app
+# VITE_SERVER_URL=https://SEU-BACKEND.onrender.com
 ```
 
 ### Opção 2: Docker (Ambos)
