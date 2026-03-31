@@ -115,13 +115,14 @@ export default function PokerTable({
                 </div>
 
                 <div className="cards-grid">
-                  {TAROT_VALUES.map((value) => (
+                  {TAROT_VALUES.map((value, index) => (
                     <TarotCard
                       key={value}
                       value={value}
                       isSelected={userVote === value}
                       isRevealed={revealedVotes}
                       participantVote={votes.get(value)}
+                      isPriority={index < 3}
                       onClick={() => handleVoteCard(value)}
                     />
                   ))}

@@ -1,11 +1,25 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TAROT_DESCRIPTIONS } from '../utils/constants.js';
+import { getCardImage } from '../utils/cardAssets.js';
 
-export default function TarotCard({ value, isSelected, isRevealed, participantVote, onClick }) {
+export default function TarotCard({
+  value,
+  isSelected,
+  isRevealed,
+  participantVote,
+  onClick,
+  isPriority = false
+}) {
   const description = TAROT_DESCRIPTIONS[value];
   const [imageError, setImageError] = useState(false);
-  const imageSrc = useMemo(() => `/cards/${String(value).toLowerCase()}.png`, [value]);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const imageSrc = getCardImage(value);
   const footerLabel = description.label === 'D' ? 'Dúvida' : `${description.label} pontos`;
+
+  useEffect(() => {
+    setImageError(false);
+    setImageLoaded(false);
+  }, [imageSrc]);
 
   return (
     <div
@@ -17,12 +31,21 @@ export default function TarotCard({ value, isSelected, isRevealed, participantVo
     >
       <div className="card-inner">
         <div className="card-front">
-          {!imageError ? (
+          {!imageLoaded && !imageError && <div className="card-skeleton" aria-hidden />}
+
+          {!imageError && imageSrc ? (
             <img
               src={imageSrc}
               alt={`Carta ${description.label}`}
-              className="card-artwork"
-              onError={() => setImageError(true)}
+              className={`card-artwork ${imageLoaded ? 'loaded' : ''}`}
+              loading={isPriority ? 'eager' : 'lazy'}
+              fetchPriority={isPriority ? 'high' : 'low'}
+              decoding="async"
+              onLoad={() => setImageLoaded(true)}
+              onError={() => {
+                setImageError(true);
+                setImageLoaded(true);
+              }}
             />
           ) : (
             <div className="card-fallback">
@@ -132,6 +155,32 @@ export default function TarotCard({ value, isSelected, isRevealed, participantVo
           height: 100%;
           object-fit: cover;
           display: block;
+          opacity: 0;
+          transition: opacity 0.2s ease;
+        }
+
+        .card-artwork.loaded {
+          opacity: 1;
+        }
+
+        .card-skeleton {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            110deg,
+            rgba(255, 255, 255, 0.06) 8%,
+            rgba(255, 255, 255, 0.2) 18%,
+            rgba(255, 255, 255, 0.06) 33%
+          );
+          background-size: 200% 100%;
+          animation: shimmer 1.1s linear infinite;
+          z-index: 1;
+        }
+
+        @keyframes shimmer {
+          to {
+            background-position-x: -200%;
+          }
         }
 
         .card-footer {
