@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import lobbyHero from '../assets/home/lobby-hero.webp';
 
 export default function RoomJoin({ onJoin, initialRoomId }) {
   const [userName, setUserName] = useState('');
@@ -30,81 +31,92 @@ export default function RoomJoin({ onJoin, initialRoomId }) {
 
   return (
     <div className="room-join-container">
-      <div className="room-join-card">
-        <div className="mode-selector">
-          <button
-            className={`mode-btn ${mode === 'create' ? 'active' : ''}`}
-            onClick={() => setMode('create')}
-          >
-            Criar sala
-          </button>
-          <button
-            className={`mode-btn ${mode === 'join' ? 'active' : ''}`}
-            onClick={() => setMode('join')}
-          >
-            Entrar na sala
-          </button>
-        </div>
+      <div className="room-join-stack">
+        <img
+          src={lobbyHero}
+          alt="Ilustração da mesa de planning poker"
+          className="room-join-hero"
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+        />
 
-        {mode === 'create' ? (
-          <form onSubmit={handleCreateRoom} className="join-form">
-            <div className="form-group">
-              <label>Seu nome</label>
-              <input
-                type="text"
-                placeholder="Digite seu nome..."
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-                autoFocus
-              />
-            </div>
-
-            <button type="submit" className="btn-primary" disabled={!userName.trim()}>
+        <div className="room-join-card">
+          <div className="mode-selector">
+            <button
+              className={`mode-btn ${mode === 'create' ? 'active' : ''}`}
+              onClick={() => setMode('create')}
+            >
               Criar sala
             </button>
-
-            <div className="info-text">
-              Você receberá um link para compartilhar com seu time
-            </div>
-          </form>
-        ) : (
-          <form onSubmit={handleJoinRoom} className="join-form">
-            <div className="form-group">
-              <label>Seu Nome</label>
-              <input
-                type="text"
-                placeholder="Digite seu nome..."
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-                autoFocus
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Código da sala</label>
-              <input
-                type="text"
-                placeholder="Cole o código da sala..."
-                value={roomId}
-                onChange={(e) => setRoomId(e.target.value)}
-              />
-            </div>
-
-            {initialRoomId && (
-              <div className="info-text">
-                Link detectado: entre com seu nome para votar nesta sala.
-              </div>
-            )}
-
             <button
-              type="submit"
-              className="btn-primary"
-              disabled={!userName.trim() || !roomId.trim()}
+              className={`mode-btn ${mode === 'join' ? 'active' : ''}`}
+              onClick={() => setMode('join')}
             >
               Entrar na sala
             </button>
-          </form>
-        )}
+          </div>
+
+          {mode === 'create' ? (
+            <form onSubmit={handleCreateRoom} className="join-form">
+              <div className="form-group">
+                <label>Seu nome</label>
+                <input
+                  type="text"
+                  placeholder="Digite seu nome..."
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  autoFocus
+                />
+              </div>
+
+              <button type="submit" className="btn-primary" disabled={!userName.trim()}>
+                Criar sala
+              </button>
+
+              <div className="info-text">
+                Você receberá um link para compartilhar com seu time
+              </div>
+            </form>
+          ) : (
+            <form onSubmit={handleJoinRoom} className="join-form">
+              <div className="form-group">
+                <label>Seu Nome</label>
+                <input
+                  type="text"
+                  placeholder="Digite seu nome..."
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  autoFocus
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Código da sala</label>
+                <input
+                  type="text"
+                  placeholder="Cole o código da sala..."
+                  value={roomId}
+                  onChange={(e) => setRoomId(e.target.value)}
+                />
+              </div>
+
+              {initialRoomId && (
+                <div className="info-text">
+                  Link detectado: entre com seu nome para votar nesta sala.
+                </div>
+              )}
+
+              <button
+                type="submit"
+                className="btn-primary"
+                disabled={!userName.trim() || !roomId.trim()}
+              >
+                Entrar na sala
+              </button>
+            </form>
+          )}
+        </div>
       </div>
 
       <style jsx>{`
@@ -113,17 +125,35 @@ export default function RoomJoin({ onJoin, initialRoomId }) {
           display: flex;
           align-items: center;
           justify-content: center;
+          padding: 1rem 0.75rem 2rem;
           background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
           position: relative;
           overflow: hidden;
+        }
+
+        .room-join-stack {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.9rem;
+        }
+
+        .room-join-hero {
+          width: min(90vw, 420px);
+          max-height: 250px;
+          object-fit: cover;
+          border-radius: 16px;
+          border: 1px solid rgba(157, 78, 221, 0.45);
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
         }
 
         .room-join-card {
           background: rgba(20, 20, 40, 0.9);
           border: 2px solid #9d4edd;
           border-radius: 20px;
-          padding: 3rem;
-          width: 90%;
+          padding: 2.4rem;
+          width: min(92vw, 500px);
           max-width: 500px;
           box-shadow: 0 8px 32px rgba(157, 78, 221, 0.3);
           backdrop-filter: blur(10px);
@@ -223,8 +253,14 @@ export default function RoomJoin({ onJoin, initialRoomId }) {
         }
 
         @media (max-width: 600px) {
+          .room-join-hero {
+            width: min(92vw, 360px);
+            max-height: 210px;
+            border-radius: 12px;
+          }
+
           .room-join-card {
-            padding: 2rem;
+            padding: 1.8rem 1.3rem;
             border-radius: 15px;
           }
         }

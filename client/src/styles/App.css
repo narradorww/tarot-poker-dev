@@ -33,14 +33,14 @@ body {
 
 .app-header {
   text-align: center;
-  padding: 2rem 1rem;
+  padding: 1.1rem 1rem 0.9rem;
   background: linear-gradient(135deg, rgba(157, 78, 221, 0.1), rgba(0, 217, 255, 0.1));
   border-bottom: 1px solid rgba(157, 78, 221, 0.3);
 }
 
 .app-header h1 {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.9rem;
+  margin-bottom: 0.28rem;
   background: linear-gradient(135deg, #9d4edd, #c77dff, #00d9ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -59,9 +59,8 @@ body {
 
 .app-header .subtitle {
   color: #a78bfa;
-  font-size: 1rem;
+  font-size: 0.88rem;
   margin: 0;
-  font-style: italic;
 }
 
 .app-main {
@@ -127,11 +126,11 @@ body {
 
 @media (max-width: 600px) {
   .app-header h1 {
-    font-size: 1.8rem;
+    font-size: 1.45rem;
   }
 
   .app-header {
-    padding: 1.5rem 1rem;
+    padding: 0.85rem 0.75rem 0.7rem;
   }
 
   .app-main {
