@@ -1,0 +1,185 @@
+/* Mobile optimizations */
+
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 13px;
+  }
+}
+
+/* Touch-friendly buttons */
+@media (hover: none) and (pointer: coarse) {
+  button {
+    min-height: 48px;
+    min-width: 48px;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .btn-primary-small,
+  .mode-btn {
+    min-height: 48px;
+  }
+
+  /* Prevent zoom on input focus */
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+}
+
+/* Responsive grid for cards */
+@media (max-width: 1024px) {
+  .cards-grid {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .cards-grid {
+    grid-template-columns: repeat(auto-fit, minmax(75px, 1fr)) !important;
+    gap: 0.8rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .cards-grid {
+    grid-template-columns: repeat(auto-fit, minmax(65px, 1fr)) !important;
+    gap: 0.6rem !important;
+  }
+}
+
+/* Full-screen modal on mobile */
+@media (max-width: 600px) {
+  .history-overlay {
+    align-items: flex-end !important;
+  }
+
+  .history-panel {
+    max-width: 100% !important;
+    height: 80vh !important;
+  }
+}
+
+/* Improve visibility on small screens */
+@media (max-width: 480px) {
+  .task-name {
+    font-size: 1.1rem !important;
+  }
+
+  .action-buttons {
+    flex-direction: column !important;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100% !important;
+  }
+
+  /* Stack header elements */
+  .table-header {
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+
+  .header-left,
+  .header-right {
+    width: 100% !important;
+  }
+
+  .header-right {
+    flex-direction: column !important;
+  }
+
+  .header-right button {
+    width: 100% !important;
+  }
+
+  /* Optimize participants list for mobile */
+  .participants-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Ensure sidebar is not too wide */
+  .sidebar {
+    margin-top: 1rem;
+  }
+
+  .table-content {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+}
+
+/* Landscape orientation adjustments */
+@media (max-width: 1024px) and (orientation: landscape) {
+  .poker-table {
+    min-height: auto;
+  }
+
+  .table-content {
+    grid-template-columns: 1fr 300px !important;
+  }
+
+  .voting-section {
+    max-height: 70vh;
+  }
+
+  .sidebar {
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+}
+
+/* Prevent layout shift on scrollbar */
+html {
+  overflow-y: scroll;
+}
+
+/* Smooth transitions on mobile */
+* {
+  transition-duration: 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Safe area insets for notched devices */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+    padding-top: max(0px, env(safe-area-inset-top));
+  }
+}
+
+/* Virtual keyboard adjustments */
+@media (max-height: 500px) and (orientation: landscape) {
+  .app-header {
+    padding: 0.5rem;
+  }
+
+  .app-header h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .task-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
