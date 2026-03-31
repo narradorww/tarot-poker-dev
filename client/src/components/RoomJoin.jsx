@@ -140,9 +140,12 @@ export default function RoomJoin({ onJoin, initialRoomId }) {
         }
 
         .room-join-hero {
-          width: min(90vw, 420px);
-          max-height: 250px;
+          width: min(92vw, 460px);
+          max-height: 320px;
           object-fit: cover;
+          object-position: center top;
+          transform: translateY(-30px);
+          margin-bottom: -20px;
           border-radius: 16px;
           border: 1px solid rgba(157, 78, 221, 0.45);
           box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
@@ -254,8 +257,10 @@ export default function RoomJoin({ onJoin, initialRoomId }) {
 
         @media (max-width: 600px) {
           .room-join-hero {
-            width: min(92vw, 360px);
-            max-height: 210px;
+            width: min(94vw, 390px);
+            max-height: 260px;
+            transform: translateY(-24px);
+            margin-bottom: -14px;
             border-radius: 12px;
           }
 
