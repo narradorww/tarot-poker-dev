@@ -7,6 +7,16 @@ export default function ParticipantsList({
   revealedVotes,
   currentUserName
 }) {
+  const formatVoteLabel = (value) => {
+    if (typeof value === 'number') {
+      return `${value} pontos`;
+    }
+    if (value === 'D') {
+      return 'Dúvida';
+    }
+    return String(value);
+  };
+
   return (
     <div className="participants-list">
       <div className="participants-header">
@@ -49,7 +59,7 @@ export default function ParticipantsList({
                   )}
 
                   {revealedVotes && hasVoted && (
-                    <span className="vote-badge">{vote.value} pontos</span>
+                    <span className="vote-badge">{formatVoteLabel(vote.value)}</span>
                   )}
                 </div>
               </div>

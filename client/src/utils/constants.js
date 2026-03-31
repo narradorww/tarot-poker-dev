@@ -1,15 +1,15 @@
-// Fibonacci sequence for planning poker
-export const TAROT_VALUES = [0, 1, 2, 3, 5, 8, 13];
+// Planning Poker deck values + doubt card
+export const TAROT_VALUES = [0, 1, 2, 3, 5, 8, 13, 'D'];
 
-// Tarot card descriptions for each value
 export const TAROT_DESCRIPTIONS = {
-  0: { arcana: 'The Fool', meaning: 'Zero Points - Not Ready' },
-  1: { arcana: 'The Magician', meaning: 'One Point - Trivial' },
-  2: { arcana: 'The High Priestess', meaning: 'Two Points - Simple' },
-  3: { arcana: 'The Empress', meaning: 'Three Points - Easy' },
-  5: { arcana: 'The Hierophant', meaning: 'Five Points - Medium' },
-  8: { arcana: 'Strength', meaning: 'Eight Points - Hard' },
-  13: { arcana: 'Death', meaning: 'Thirteen Points - Very Hard' }
+  0: { label: '0', meaning: 'Sem estimativa' },
+  1: { label: '1', meaning: 'Muito simples' },
+  2: { label: '2', meaning: 'Simples' },
+  3: { label: '3', meaning: 'Baixa complexidade' },
+  5: { label: '5', meaning: 'Complexidade média' },
+  8: { label: '8', meaning: 'Complexa' },
+  13: { label: '13', meaning: 'Muito complexa' },
+  D: { label: 'D', meaning: 'Dúvida' }
 };
 
 // Server URL configuration

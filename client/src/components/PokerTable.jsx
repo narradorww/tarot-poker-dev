@@ -70,6 +70,7 @@ export default function PokerTable({
 
   const isFacilitator = true; // Para simplificar, todos podem revelar. Você pode adicionar controle de facilitador
   const allVoted = totalParticipants > 0 && voteCount === totalParticipants;
+  const currentVoteLabel = userVote === 'D' ? 'Dúvida' : `${userVote} pontos`;
 
   const handleCopyInvite = async () => {
     const inviteUrl = getRoomInviteUrl(roomId);
@@ -152,7 +153,7 @@ export default function PokerTable({
                     {!revealedVotes ? (
                       <>
                         {userVote !== null ? (
-                          <span className="status-success">✓ Seu voto: {userVote} pontos</span>
+                          <span className="status-success">✓ Seu voto: {currentVoteLabel}</span>
                         ) : (
                           <span className="status-waiting">⏳ Aguardando seu voto...</span>
                         )}

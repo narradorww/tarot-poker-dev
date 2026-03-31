@@ -220,9 +220,10 @@ function calculateConsensus(votes) {
   );
 
   const allSame = Object.values(valueMap).every((v) => v === votes.length / Object.keys(valueMap).length);
+  const mostVotedAsNumber = Number(mostVoted);
 
   return {
-    mostVoted: parseInt(mostVoted),
+    mostVoted: Number.isNaN(mostVotedAsNumber) ? mostVoted : mostVotedAsNumber,
     unanimous: allSame,
     distribution: valueMap
   };

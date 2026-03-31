@@ -1,8 +1,10 @@
-import React from 'react';
-import { TAROT_VALUES, TAROT_DESCRIPTIONS } from '../utils/constants.js';
+import React, { useState } from 'react';
+import { TAROT_DESCRIPTIONS } from '../utils/constants.js';
 
 export default function TarotCard({ value, isSelected, isRevealed, participantVote, onClick }) {
   const description = TAROT_DESCRIPTIONS[value];
+  const [doubtImageError, setDoubtImageError] = useState(false);
+  const isDoubtCard = value === 'D';
 
   return (
     <div
@@ -10,29 +12,34 @@ export default function TarotCard({ value, isSelected, isRevealed, participantVo
         isRevealed && participantVote ? 'revealed' : ''
       }`}
       onClick={onClick}
-      title={`${description.arcana} - ${description.meaning}`}
+      title={`${description.label} - ${description.meaning}`}
     >
       <div className="card-inner">
-        {/* Card Front */}
         <div className="card-front">
-          <div className="arcana-number">
-            <span className="number">{value}</span>
+          <div className="vote-number">
+            <span className="number">{description.label}</span>
           </div>
 
-          <div className="card-symbol">
-            {getArcanaSymbol(value)}
-          </div>
-
-          <div className="arcana-name">
-            <span className="name">{description.arcana}</span>
-          </div>
+          {isDoubtCard && (
+            <div className="doubt-image-wrapper">
+              {!doubtImageError ? (
+                <img
+                  src="/d.png"
+                  alt="Carta de dúvida"
+                  className="doubt-image"
+                  onError={() => setDoubtImageError(true)}
+                />
+              ) : (
+                <span className="doubt-fallback">Dúvida</span>
+              )}
+            </div>
+          )}
 
           {isSelected && (
             <div className="selection-indicator">✓</div>
           )}
         </div>
 
-        {/* Card Back (Revealed vote) */}
         {isRevealed && participantVote && (
           <div className="card-back">
             <div className="vote-value">{participantVote.value}</div>
@@ -109,43 +116,48 @@ export default function TarotCard({ value, isSelected, isRevealed, participantVo
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-content: space-between;
+          justify-content: center;
+          gap: 0.75rem;
           height: 100%;
           width: 100%;
         }
 
-        .arcana-number {
+        .vote-number {
           display: flex;
           align-items: center;
           justify-content: center;
-          margin-bottom: 0.3rem;
         }
 
         .number {
-          font-size: 1.5rem;
+          font-size: 2.1rem;
           font-weight: bold;
           color: #c77dff;
           text-shadow: 0 0 10px rgba(199, 125, 255, 0.5);
         }
 
-        .card-symbol {
-          font-size: 2rem;
-          margin: 0.3rem 0;
-          animation: pulse 2s ease-in-out infinite;
+        .doubt-image-wrapper {
+          width: 48px;
+          height: 48px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 8px;
+          background: rgba(255, 255, 255, 0.08);
         }
 
-        @keyframes pulse {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.1); }
+        .doubt-image {
+          width: 44px;
+          height: 44px;
+          object-fit: contain;
+          border-radius: 6px;
         }
 
-        .arcana-name {
-          font-size: 0.65rem;
-          color: #a78bfa;
+        .doubt-fallback {
+          font-size: 0.75rem;
+          color: #d8b4fe;
           font-weight: 600;
           text-transform: uppercase;
           letter-spacing: 0.5px;
-          line-height: 1.2;
         }
 
         .selection-indicator {
@@ -202,31 +214,20 @@ export default function TarotCard({ value, isSelected, isRevealed, participantVo
           }
 
           .number {
-            font-size: 1.2rem;
+            font-size: 1.8rem;
           }
 
-          .card-symbol {
-            font-size: 1.5rem;
+          .doubt-image-wrapper {
+            width: 40px;
+            height: 40px;
           }
 
-          .arcana-name {
-            font-size: 0.55rem;
+          .doubt-image {
+            width: 36px;
+            height: 36px;
           }
         }
       `}</style>
     </div>
   );
-}
-
-function getArcanaSymbol(value) {
-  const symbols = {
-    0: '🤡',
-    1: '✨',
-    2: '🔮',
-    3: '👑',
-    5: '🗝️',
-    8: '💪',
-    13: '💀'
-  };
-  return symbols[value] || '🃏';
 }
