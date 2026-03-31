@@ -397,8 +397,9 @@ export default function PokerTable({
 
         .cards-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+          grid-template-columns: repeat(3, minmax(92px, 112px));
           gap: 1rem;
+          justify-content: center;
           justify-items: center;
         }
 
@@ -576,8 +577,9 @@ export default function PokerTable({
           }
 
           .cards-grid {
-            grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+            grid-template-columns: repeat(3, minmax(70px, 96px));
             gap: 0.8rem;
+            justify-content: center;
           }
         }
       `}</style>
