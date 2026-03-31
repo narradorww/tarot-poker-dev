@@ -255,6 +255,7 @@ CORS_ORIGIN=http://localhost:5173
 
 ```env
 VITE_SERVER_URL=http://localhost:3001
+VITE_ROOM_ROUTE_PREFIX=/tarot-dev
 ```
 
 ## 🤝 Contribuindo

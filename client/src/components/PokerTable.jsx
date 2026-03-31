@@ -15,6 +15,7 @@ import {
   startTimer,
   skipTask
 } from '../utils/socket.js';
+import { getRoomInviteUrl } from '../utils/roomUrl.js';
 
 export default function PokerTable({
   roomId,
@@ -34,6 +35,7 @@ export default function PokerTable({
 }) {
   const [newTask, setNewTask] = useState('');
   const [showHistory, setShowHistory] = useState(false);
+  const [copyFeedback, setCopyFeedback] = useState('');
 
   const handleVoteCard = (value) => {
     if (!revealedVotes) {
@@ -69,15 +71,41 @@ export default function PokerTable({
   const isFacilitator = true; // Para simplificar, todos podem revelar. Você pode adicionar controle de facilitador
   const allVoted = totalParticipants > 0 && voteCount === totalParticipants;
 
+  const handleCopyInvite = async () => {
+    const inviteUrl = getRoomInviteUrl(roomId);
+
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(inviteUrl);
+      } else {
+        const tempInput = document.createElement('textarea');
+        tempInput.value = inviteUrl;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+      }
+      setCopyFeedback('Link copiado');
+    } catch (error) {
+      setCopyFeedback('Não foi possível copiar');
+    }
+
+    setTimeout(() => setCopyFeedback(''), 2500);
+  };
+
   return (
     <div className="poker-table">
       {/* Header with room info */}
       <div className="table-header">
         <div className="header-left">
-          <h2>🎭 Sala: <code>{roomId.substring(0, 8)}...</code></h2>
+          <h2>🎭 Sala: <code title={roomId}>{roomId.substring(0, 8)}...</code></h2>
           <p className="user-info">Bem-vindo, {userName}!</p>
         </div>
         <div className="header-right">
+          <button className="btn-copy" onClick={handleCopyInvite}>
+            🔗 Copiar convite
+          </button>
+          {copyFeedback && <span className="copy-feedback">{copyFeedback}</span>}
           <button className="btn-history" onClick={() => setShowHistory(!showHistory)}>
             📚 Histórico ({history.length})
           </button>
@@ -258,6 +286,7 @@ export default function PokerTable({
           gap: 1rem;
         }
 
+        .btn-copy,
         .btn-history,
         .btn-leave {
           padding: 0.6rem 1.2rem;
@@ -272,6 +301,19 @@ export default function PokerTable({
 
         .btn-history:hover {
           background: rgba(157, 78, 221, 0.3);
+        }
+
+        .btn-copy:hover {
+          background: rgba(0, 217, 255, 0.2);
+          border-color: #00d9ff;
+          color: #00d9ff;
+        }
+
+        .copy-feedback {
+          color: #00d9ff;
+          font-size: 0.85rem;
+          align-self: center;
+          white-space: nowrap;
         }
 
         .btn-leave:hover {

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { getSocket, connectSocket, disconnectSocket, joinRoom } from './utils/socket.js';
+import { getLobbyPath, getRoomFromLocation, getRoomPath } from './utils/roomUrl.js';
 import RoomJoin from './components/RoomJoin.jsx';
 import PokerTable from './components/PokerTable.jsx';
 import './styles/Mobile.css';
 
 function App() {
+  const prefilledRoomId = getRoomFromLocation();
   const [gameState, setGameState] = useState('join'); // 'join' or 'playing'
   const [roomId, setRoomId] = useState(null);
   const [userName, setUserName] = useState(null);
@@ -91,6 +93,10 @@ function App() {
     setUserName(name);
     joinRoom(room, name);
     setGameState('playing');
+
+    if (typeof window !== 'undefined') {
+      window.history.replaceState({}, '', getRoomPath(room));
+    }
   };
 
   const handleLeaveRoom = () => {
@@ -105,6 +111,10 @@ function App() {
     setHistory([]);
     setUserVote(null);
     setRevealedVotes(false);
+
+    if (typeof window !== 'undefined') {
+      window.history.replaceState({}, '', getLobbyPath());
+    }
   };
 
   const handleVoteSubmitted = (vote) => {
@@ -120,7 +130,7 @@ function App() {
 
       <main className="app-main">
         {gameState === 'join' ? (
-          <RoomJoin onJoin={handleJoinRoom} />
+          <RoomJoin onJoin={handleJoinRoom} initialRoomId={prefilledRoomId} />
         ) : (
           <PokerTable
             roomId={roomId}

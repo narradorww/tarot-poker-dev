@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-export default function RoomJoin({ onJoin }) {
+export default function RoomJoin({ onJoin, initialRoomId }) {
   const [userName, setUserName] = useState('');
   const [roomId, setRoomId] = useState('');
   const [mode, setMode] = useState('create'); // 'create' or 'join'
+
+  useEffect(() => {
+    if (initialRoomId) {
+      setRoomId(initialRoomId);
+      setMode('join');
+    }
+  }, [initialRoomId]);
 
   const handleCreateRoom = (e) => {
     e.preventDefault();
@@ -18,15 +25,6 @@ export default function RoomJoin({ onJoin }) {
     e.preventDefault();
     if (userName.trim() && roomId.trim()) {
       onJoin(roomId, userName);
-    }
-  };
-
-  const copyRoomId = () => {
-    if (roomId) {
-      navigator.clipboard.writeText(
-        `${window.location.origin}?room=${roomId}`
-      );
-      alert('Link copiado para a área de transferência!');
     }
   };
 
@@ -95,6 +93,12 @@ export default function RoomJoin({ onJoin }) {
                 onChange={(e) => setRoomId(e.target.value)}
               />
             </div>
+
+            {initialRoomId && (
+              <div className="info-text">
+                Link detectado: entre com seu nome para votar nesta sala.
+              </div>
+            )}
 
             <button
               type="submit"
