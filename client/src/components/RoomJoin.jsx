@@ -30,30 +30,26 @@ export default function RoomJoin({ onJoin, initialRoomId }) {
 
   return (
     <div className="room-join-container">
-      <div className="mystical-background">
-        <div className="floating-symbols">✨ 🃏 ⭐ 🌙 ✨</div>
-      </div>
-
       <div className="room-join-card">
         <div className="mode-selector">
           <button
             className={`mode-btn ${mode === 'create' ? 'active' : ''}`}
             onClick={() => setMode('create')}
           >
-            ✨ Criar Sala
+            Criar sala
           </button>
           <button
             className={`mode-btn ${mode === 'join' ? 'active' : ''}`}
             onClick={() => setMode('join')}
           >
-            🔮 Entrar na Sala
+            Entrar na sala
           </button>
         </div>
 
         {mode === 'create' ? (
           <form onSubmit={handleCreateRoom} className="join-form">
             <div className="form-group">
-              <label>Qual é o seu nome, Mago?</label>
+              <label>Seu nome</label>
               <input
                 type="text"
                 placeholder="Digite seu nome..."
@@ -64,7 +60,7 @@ export default function RoomJoin({ onJoin, initialRoomId }) {
             </div>
 
             <button type="submit" className="btn-primary" disabled={!userName.trim()}>
-              ✨ Criar Sala Mística
+              Criar sala
             </button>
 
             <div className="info-text">
@@ -77,7 +73,7 @@ export default function RoomJoin({ onJoin, initialRoomId }) {
               <label>Seu Nome</label>
               <input
                 type="text"
-                placeholder="Como te chamam?"
+                placeholder="Digite seu nome..."
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)}
                 autoFocus
@@ -85,10 +81,10 @@ export default function RoomJoin({ onJoin, initialRoomId }) {
             </div>
 
             <div className="form-group">
-              <label>ID da Sala</label>
+              <label>Código da sala</label>
               <input
                 type="text"
-                placeholder="Cole o ID da sala..."
+                placeholder="Cole o código da sala..."
                 value={roomId}
                 onChange={(e) => setRoomId(e.target.value)}
               />
@@ -105,7 +101,7 @@ export default function RoomJoin({ onJoin, initialRoomId }) {
               className="btn-primary"
               disabled={!userName.trim() || !roomId.trim()}
             >
-              🔮 Entrar na Sala
+              Entrar na sala
             </button>
           </form>
         )}
@@ -120,24 +116,6 @@ export default function RoomJoin({ onJoin, initialRoomId }) {
           background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
           position: relative;
           overflow: hidden;
-        }
-
-        .mystical-background {
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          opacity: 0.1;
-          pointer-events: none;
-        }
-
-        .floating-symbols {
-          font-size: 4rem;
-          animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
         }
 
         .room-join-card {
@@ -248,10 +226,6 @@ export default function RoomJoin({ onJoin, initialRoomId }) {
           .room-join-card {
             padding: 2rem;
             border-radius: 15px;
-          }
-
-          .floating-symbols {
-            font-size: 2rem;
           }
         }
       `}</style>

@@ -125,7 +125,7 @@ function App() {
     <div className="app">
       <header className="app-header">
         <h1>🃏 Tarot Dev Poker</h1>
-        <p className="subtitle">Planning com Energias Místicas</p>
+        <p className="subtitle">Planning Poker para Times de Desenvolvimento</p>
       </header>
 
       <main className="app-main">
@@ -152,7 +152,7 @@ function App() {
       </main>
 
       <footer className="app-footer">
-        <p>Desenvolvido com ✨ por Rodrigo Alexandre | Mobile Dev MERN</p>
+        <p>Desenvolvido por Rodrigo Alexandre | Mobile Dev MERN</p>
       </footer>
     </div>
   );
