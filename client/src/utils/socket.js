@@ -3,6 +3,11 @@ import { getServerUrl } from './constants.js';
 
 let socket = null;
 
+const emitEvent = (eventName, payload) => {
+  const activeSocket = getSocket();
+  activeSocket.emit(eventName, payload);
+};
+
 export const initializeSocket = () => {
   const serverUrl = getServerUrl();
 
@@ -38,49 +43,33 @@ export const disconnectSocket = () => {
 };
 
 export const joinRoom = (roomId, userName) => {
-  if (socket && socket.connected) {
-    socket.emit('join-room', { roomId, userName });
-  }
+  emitEvent('join-room', { roomId, userName });
 };
 
 export const submitVote = (roomId, vote) => {
-  if (socket && socket.connected) {
-    socket.emit('submit-vote', { roomId, vote });
-  }
+  emitEvent('submit-vote', { roomId, vote });
 };
 
 export const addTask = (roomId, task) => {
-  if (socket && socket.connected) {
-    socket.emit('add-task', { roomId, task });
-  }
+  emitEvent('add-task', { roomId, task });
 };
 
 export const revealVotes = (roomId) => {
-  if (socket && socket.connected) {
-    socket.emit('reveal-votes', { roomId });
-  }
+  emitEvent('reveal-votes', { roomId });
 };
 
 export const estimateTask = (roomId, estimatedValue) => {
-  if (socket && socket.connected) {
-    socket.emit('estimate-task', { roomId, estimatedValue });
-  }
+  emitEvent('estimate-task', { roomId, estimatedValue });
 };
 
 export const startTimer = (roomId, duration) => {
-  if (socket && socket.connected) {
-    socket.emit('start-timer', { roomId, duration });
-  }
+  emitEvent('start-timer', { roomId, duration });
 };
 
 export const skipTask = (roomId) => {
-  if (socket && socket.connected) {
-    socket.emit('skip-task', { roomId });
-  }
+  emitEvent('skip-task', { roomId });
 };
 
 export const getHistory = (roomId) => {
-  if (socket && socket.connected) {
-    socket.emit('get-history', { roomId });
-  }
+  emitEvent('get-history', { roomId });
 };

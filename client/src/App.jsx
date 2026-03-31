@@ -89,10 +89,8 @@ function App() {
     connectSocket();
     setRoomId(room);
     setUserName(name);
-    setTimeout(() => {
-      joinRoom(room, name);
-      setGameState('playing');
-    }, 100);
+    joinRoom(room, name);
+    setGameState('playing');
   };
 
   const handleLeaveRoom = () => {
