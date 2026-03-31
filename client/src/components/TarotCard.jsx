@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { TAROT_DESCRIPTIONS } from '../utils/constants.js';
 
 export default function TarotCard({ value, isSelected, isRevealed, participantVote, onClick }) {
   const description = TAROT_DESCRIPTIONS[value];
-  const [doubtImageError, setDoubtImageError] = useState(false);
-  const isDoubtCard = value === 'D';
+  const [imageError, setImageError] = useState(false);
+  const imageSrc = useMemo(() => `/cards/${String(value).toLowerCase()}.png`, [value]);
 
   return (
     <div
@@ -16,22 +16,17 @@ export default function TarotCard({ value, isSelected, isRevealed, participantVo
     >
       <div className="card-inner">
         <div className="card-front">
-          <div className="vote-number">
-            <span className="number">{description.label}</span>
-          </div>
-
-          {isDoubtCard && (
-            <div className="doubt-image-wrapper">
-              {!doubtImageError ? (
-                <img
-                  src="/d.png"
-                  alt="Carta de dúvida"
-                  className="doubt-image"
-                  onError={() => setDoubtImageError(true)}
-                />
-              ) : (
-                <span className="doubt-fallback">Dúvida</span>
-              )}
+          {!imageError ? (
+            <img
+              src={imageSrc}
+              alt={`Carta ${description.label}`}
+              className="card-artwork"
+              onError={() => setImageError(true)}
+            />
+          ) : (
+            <div className="card-fallback">
+              <span className="fallback-value">{description.label}</span>
+              <span className="fallback-text">{description.meaning}</span>
             </div>
           )}
 
@@ -51,10 +46,10 @@ export default function TarotCard({ value, isSelected, isRevealed, participantVo
       <style jsx>{`
         .tarot-card {
           aspect-ratio: 2/3;
-          background: linear-gradient(135deg, #1a0033, #2d0052);
+          background: linear-gradient(135deg, #140826, #2d0a4d);
           border: 2px solid #9d4edd;
           border-radius: 12px;
-          padding: 1rem;
+          padding: 0.35rem;
           cursor: pointer;
           transition: all 0.3s ease;
           position: relative;
@@ -92,7 +87,7 @@ export default function TarotCard({ value, isSelected, isRevealed, participantVo
           background: linear-gradient(135deg, #5a189a, #7209b7);
           border-color: #c77dff;
           box-shadow: 0 0 30px rgba(199, 125, 255, 0.6);
-          transform: scale(1.1);
+          transform: scale(1.06);
         }
 
         .tarot-card.revealed {
@@ -113,57 +108,51 @@ export default function TarotCard({ value, isSelected, isRevealed, participantVo
         }
 
         .card-front {
+          position: relative;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          gap: 0.75rem;
           height: 100%;
           width: 100%;
-        }
-
-        .vote-number {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .number {
-          font-size: 2.1rem;
-          font-weight: bold;
-          color: #c77dff;
-          text-shadow: 0 0 10px rgba(199, 125, 255, 0.5);
-        }
-
-        .doubt-image-wrapper {
-          width: 48px;
-          height: 48px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
           border-radius: 8px;
-          background: rgba(255, 255, 255, 0.08);
+          overflow: hidden;
+          background: rgba(0, 0, 0, 0.25);
         }
 
-        .doubt-image {
-          width: 44px;
-          height: 44px;
-          object-fit: contain;
-          border-radius: 6px;
+        .card-artwork {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
         }
 
-        .doubt-fallback {
-          font-size: 0.75rem;
+        .card-fallback {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 0.4rem;
+          text-align: center;
+          padding: 0.5rem;
+        }
+
+        .fallback-value {
+          font-size: 2rem;
+          font-weight: 700;
+          color: #f3e8ff;
+        }
+
+        .fallback-text {
+          font-size: 0.62rem;
           color: #d8b4fe;
-          font-weight: 600;
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
+          line-height: 1.2;
         }
 
         .selection-indicator {
           position: absolute;
-          top: 0.5rem;
-          right: 0.5rem;
+          top: 0.4rem;
+          right: 0.4rem;
           width: 1.5rem;
           height: 1.5rem;
           background: #c77dff;
@@ -175,12 +164,12 @@ export default function TarotCard({ value, isSelected, isRevealed, participantVo
           font-weight: bold;
           font-size: 0.9rem;
           box-shadow: 0 0 15px rgba(199, 125, 255, 0.6);
+          z-index: 4;
         }
 
         .card-back {
           position: absolute;
-          width: 100%;
-          height: 100%;
+          inset: 0;
           background: linear-gradient(135deg, #00d9ff, #0099cc);
           display: flex;
           flex-direction: column;
@@ -210,21 +199,7 @@ export default function TarotCard({ value, isSelected, isRevealed, participantVo
         @media (max-width: 600px) {
           .tarot-card {
             min-width: 70px;
-            padding: 0.7rem;
-          }
-
-          .number {
-            font-size: 1.8rem;
-          }
-
-          .doubt-image-wrapper {
-            width: 40px;
-            height: 40px;
-          }
-
-          .doubt-image {
-            width: 36px;
-            height: 36px;
+            padding: 0.3rem;
           }
         }
       `}</style>
