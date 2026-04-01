@@ -144,8 +144,8 @@ export default function RoomJoin({ onJoin, initialRoomId }) {
           max-height: 320px;
           object-fit: cover;
           object-position: center bottom;
-          transform: translateY(-52px);
-          margin-bottom: -52px;
+          transform: translateY(-20px);
+          margin-bottom: -20px;
           border-radius: 16px;
           border: 1px solid rgba(157, 78, 221, 0.45);
           box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
@@ -260,8 +260,8 @@ export default function RoomJoin({ onJoin, initialRoomId }) {
             width: min(94vw, 390px);
             max-height: 260px;
             object-position: center bottom;
-            transform: translateY(-52px);
-            margin-bottom: -52px;
+            transform: translateY(-20px);
+            margin-bottom: -20px;
             border-radius: 12px;
           }
 
