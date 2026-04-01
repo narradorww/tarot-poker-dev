@@ -144,7 +144,7 @@ export default function RoomJoin({ onJoin, initialRoomId }) {
           max-height: 320px;
           object-fit: cover;
           object-position: center bottom;
-          transform: translateY(20px);
+          transform: translateY(-12px);
           margin-bottom: 20px;
           border-radius: 16px;
           border: 1px solid rgba(157, 78, 221, 0.45);
